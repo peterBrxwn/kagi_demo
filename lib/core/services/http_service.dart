@@ -6,17 +6,19 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 // Project imports:
-import 'package:kagi_demo/core/config/app.dart';
 import 'package:kagi_demo/core/exceptions/network.dart';
 
 class HttpService {
-  final String _baseUrl = AppConfig.baseUrl;
+  final String _baseUrl;
   final Map<String, String> _defaultHeaders;
+  final http.Client _client;
 
-  HttpService({Map<String, String>? defaultHeaders})
-    : _defaultHeaders =
-          defaultHeaders ??
-          {'Content-Type': 'application/json; charset=UTF-F8'};
+  HttpService(
+    this._baseUrl, {
+    Map<String, String>? defaultHeaders,
+    http.Client? client,
+  }) : _defaultHeaders = defaultHeaders ?? {'Content-Type': 'application/json'},
+       _client = client ?? http.Client();
 
   Uri _buildUrl(String endpoint, {Map<String, dynamic>? queryParameters}) {
     final uri = Uri.parse('$_baseUrl/$endpoint');
@@ -27,40 +29,48 @@ class HttpService {
   }
 
   dynamic _handleResponse(http.Response response) {
-    final dynamic decodedResponse =
-        response.body.isNotEmpty ? jsonDecode(response.body) : null;
+    try {
+      final dynamic decodedResponse =
+          response.body.isNotEmpty ? jsonDecode(response.body) : null;
 
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      return decodedResponse;
-    } else if (response.statusCode == 401) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return decodedResponse;
+      } else if (response.statusCode == 401) {
+        throw NetworkException(
+          'Unauthorized. Please log in again.',
+          statusCode: response.statusCode,
+          responseBody: decodedResponse,
+        );
+      } else if (response.statusCode == 403) {
+        throw NetworkException(
+          'Forbidden. You do not have permission to access this resource.',
+          statusCode: response.statusCode,
+          responseBody: decodedResponse,
+        );
+      } else if (response.statusCode >= 400 && response.statusCode < 500) {
+        throw NetworkException(
+          'Client error: ${response.reasonPhrase ?? "Unknown client error"}',
+          statusCode: response.statusCode,
+          responseBody: decodedResponse,
+        );
+      } else if (response.statusCode >= 500 && response.statusCode < 600) {
+        throw NetworkException(
+          'Server error: ${response.reasonPhrase ?? "Unknown server error"}',
+          statusCode: response.statusCode,
+          responseBody: decodedResponse,
+        );
+      } else {
+        throw NetworkException(
+          'An unexpected error occurred: ${response.reasonPhrase}',
+          statusCode: response.statusCode,
+          responseBody: decodedResponse,
+        );
+      }
+    } on FormatException {
       throw NetworkException(
-        'Unauthorized. Please log in again.',
+        'Error parsing response data.',
         statusCode: response.statusCode,
-        responseBody: decodedResponse,
-      );
-    } else if (response.statusCode == 403) {
-      throw NetworkException(
-        'Forbidden. You do not have permission to access this resource.',
-        statusCode: response.statusCode,
-        responseBody: decodedResponse,
-      );
-    } else if (response.statusCode >= 400 && response.statusCode < 500) {
-      throw NetworkException(
-        'Client error: ${response.reasonPhrase ?? "Unknown client error"}',
-        statusCode: response.statusCode,
-        responseBody: decodedResponse,
-      );
-    } else if (response.statusCode >= 500 && response.statusCode < 600) {
-      throw NetworkException(
-        'Server error: ${response.reasonPhrase ?? "Unknown server error"}',
-        statusCode: response.statusCode,
-        responseBody: decodedResponse,
-      );
-    } else {
-      throw NetworkException(
-        'An unexpected error occurred: ${response.reasonPhrase}',
-        statusCode: response.statusCode,
-        responseBody: decodedResponse,
+        responseBody: response.body,
       );
     }
   }
@@ -93,7 +103,7 @@ class HttpService {
     final url = _buildUrl(endpoint, queryParameters: queryParameters);
     final requestHeaders = {..._defaultHeaders, ...?headers};
 
-    return _request(() => http.get(url, headers: requestHeaders));
+    return _request(() => _client.get(url, headers: requestHeaders));
   }
 
   Future<dynamic> post(
@@ -107,7 +117,7 @@ class HttpService {
     final encodedBody = body != null ? jsonEncode(body) : null;
 
     return _request(
-      () => http.post(url, headers: requestHeaders, body: encodedBody),
+      () => _client.post(url, headers: requestHeaders, body: encodedBody),
     );
   }
 
@@ -122,7 +132,7 @@ class HttpService {
     final encodedBody = body != null ? jsonEncode(body) : null;
 
     return _request(
-      () => http.put(url, headers: requestHeaders, body: encodedBody),
+      () => _client.put(url, headers: requestHeaders, body: encodedBody),
     );
   }
 
@@ -134,7 +144,7 @@ class HttpService {
     final url = _buildUrl(endpoint, queryParameters: queryParameters);
     final requestHeaders = {..._defaultHeaders, ...?headers};
 
-    return _request(() => http.delete(url, headers: requestHeaders));
+    return _request(() => _client.delete(url, headers: requestHeaders));
   }
 
   Future<dynamic> patch(
@@ -148,7 +158,7 @@ class HttpService {
     final encodedBody = body != null ? jsonEncode(body) : null;
 
     return _request(
-      () => http.patch(url, headers: requestHeaders, body: encodedBody),
+      () => _client.patch(url, headers: requestHeaders, body: encodedBody),
     );
   }
 }

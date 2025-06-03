@@ -23,9 +23,10 @@ abstract class CategoryApiResponseModel with _$CategoryApiResponseModel {
 
   String get formattedTimestamp {
     // Convert the timestamp to a human-readable date string
+    if (timestamp < 1) return '...';
     try {
       final date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-      return DateFormat('HH:mm:ss a').format(date);
+      return DateFormat('h:mm a').format(date);
     } catch (e) {
       return '...';
     }

@@ -84,8 +84,8 @@ as String?,
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _ArticleModel implements ArticleModel {
-  const _ArticleModel({required this.title, required this.link, required this.domain, required this.date, this.image, this.imageCaption});
+class _ArticleModel extends ArticleModel {
+  const _ArticleModel({required this.title, required this.link, required this.domain, required this.date, this.image, this.imageCaption}): super._();
   factory _ArticleModel.fromJson(Map<String, dynamic> json) => _$ArticleModelFromJson(json);
 
 @override final  String title;

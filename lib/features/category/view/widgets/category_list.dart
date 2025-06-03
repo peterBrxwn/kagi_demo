@@ -1,15 +1,17 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Project imports:
 import 'package:kagi_demo/features/articles/bloc/articles_bloc.dart';
 import 'package:kagi_demo/features/articles/impl/articles_impl.dart';
 import 'package:kagi_demo/features/articles/view/articles_list.dart';
-// Project imports:
 import 'package:kagi_demo/features/category/model/category_model.dart';
 
-class CategoryList extends StatelessWidget {
-  const CategoryList({super.key, required this.categories});
+class CategoryListWidget extends StatelessWidget {
+  const CategoryListWidget({super.key, required this.categories});
   final List<CategoryModel> categories;
 
   @override

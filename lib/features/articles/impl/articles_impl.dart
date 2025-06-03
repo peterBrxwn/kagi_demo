@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:dartz/dartz.dart';
+
 // Project imports:
 import 'package:kagi_demo/core/errors/app_error.dart';
 import 'package:kagi_demo/core/services/http_service.dart';

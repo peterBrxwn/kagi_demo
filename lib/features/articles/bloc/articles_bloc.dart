@@ -2,6 +2,7 @@
 import 'package:bloc_notification/bloc_notification.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 // Project imports:
 import 'package:kagi_demo/core/notifications/notification.dart';
 import 'package:kagi_demo/features/articles/model/articles_api_params_model.dart';
@@ -41,6 +42,7 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState>
       );
     } catch (e) {
       notify(const Notification());
+      emit(ArticlesState.error(state.model));
     }
   }
 }

@@ -35,7 +35,7 @@ class CategoryListPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Expanded(
-                    child: CategoryList(
+                    child: CategoryListWidget(
                       categories: state.model.data!.categories,
                     ),
                   ),

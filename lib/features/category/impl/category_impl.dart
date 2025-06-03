@@ -7,7 +7,7 @@ import 'package:kagi_demo/core/services/http_service.dart';
 import 'package:kagi_demo/core/typedefs.dart';
 import 'package:kagi_demo/features/category/model/category_api_params_model.dart';
 import 'package:kagi_demo/features/category/model/category_api_response_model.dart';
-import 'package:kagi_demo/features/category/repo/category.dart';
+import 'package:kagi_demo/features/category/repo/category_repo.dart';
 
 class CategoryImpl implements CategoryRepo {
   final HttpService _httpService;

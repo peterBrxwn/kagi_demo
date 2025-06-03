@@ -11,7 +11,7 @@ import 'package:kagi_demo/core/notifications/notification.dart';
 import 'package:kagi_demo/core/notifications/type.dart';
 import 'package:kagi_demo/features/category/model/category_api_params_model.dart';
 import 'package:kagi_demo/features/category/model/category_state_model.dart';
-import 'package:kagi_demo/features/category/repo/category.dart';
+import 'package:kagi_demo/features/category/repo/category_repo.dart';
 
 part 'category_bloc.freezed.dart';
 part 'category_event.dart';
@@ -50,6 +50,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState>
       );
     } catch (e) {
       notify(const Notification());
+      emit(CategoryState.error(state.model));
     }
   }
 }

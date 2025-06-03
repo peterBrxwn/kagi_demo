@@ -1,7 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 // Project imports:
 import 'package:kagi_demo/features/articles/bloc/articles_bloc.dart';
 import 'package:kagi_demo/features/articles/view/article_detail.dart';
@@ -31,11 +33,6 @@ class ArticlesListPage extends StatelessWidget {
                 itemCount: articles.length,
                 itemBuilder: (context, index) {
                   final article = articles[index];
-                  final date = DateTime.tryParse(article.date)?.toLocal();
-                  final formattedDate =
-                      date != null
-                          ? date.toLocal().toString().substring(0, 19)
-                          : "--";
 
                   return Card(
                     margin: const EdgeInsets.only(bottom: 16),
@@ -46,10 +43,19 @@ class ArticlesListPage extends StatelessWidget {
                                 article.image!,
                                 width: 80,
                                 fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) {
+                                  return const Icon(
+                                    Icons.broken_image,
+                                    size: 80,
+                                    color: Colors.grey,
+                                  );
+                                },
                               )
                               : const Icon(Icons.article_outlined),
                       title: Text(article.title),
-                      subtitle: Text('${article.domain} • $formattedDate'),
+                      subtitle: Text(
+                        '${article.domain} • ${article.formattedDate}',
+                      ),
                       onTap: () {
                         Navigator.push(
                           context,
