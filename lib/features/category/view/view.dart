@@ -22,7 +22,8 @@ class CategoryListPage extends StatelessWidget {
           builder: (context, state) {
             if (state is CategoryStateLoading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is CategoryStateLoaded) {
+            }
+            if (state is CategoryStateLoaded) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -40,14 +41,14 @@ class CategoryListPage extends StatelessWidget {
                   ),
                 ],
               );
-            } else {
-              return ErrorDisplay(
-                errorMessage: 'Failed to load categories.',
-                onRetry: () {
-                  context.read<CategoryBloc>().add(const CategoryEvent.fetch());
-                },
-              );
             }
+
+            return ErrorDisplay(
+              errorMessage: 'Failed to load categories.',
+              onRetry: () {
+                context.read<CategoryBloc>().add(const CategoryEvent.fetch());
+              },
+            );
           },
         ),
       ),
