@@ -78,8 +78,8 @@ as List<CategoryModel>,
 
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(explicitToJson: true)
 class _CategoryApiResponseModel extends CategoryApiResponseModel {
   const _CategoryApiResponseModel({required this.timestamp, required final  List<CategoryModel> categories}): _categories = categories,super._();
   factory _CategoryApiResponseModel.fromJson(Map<String, dynamic> json) => _$CategoryApiResponseModelFromJson(json);

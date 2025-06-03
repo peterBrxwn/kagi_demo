@@ -19,19 +19,20 @@ void main() {
       );
     }
 
-    testWidgets('should display the article title, summary, and button', (
-      tester,
-    ) async {
-      await tester.pumpWidget(createTestWidget());
+    testWidgets(
+      'ArticleDetailPage: should display the article title, summary, and button',
+      (tester) async {
+        await tester.pumpWidget(createTestWidget());
 
-      expect(find.text('Article Details'), findsOneWidget);
-      expect(find.text(title), findsOneWidget);
-      expect(find.text(summary), findsOneWidget);
-      expect(find.text('Read Full Article'), findsOneWidget);
-    });
+        expect(find.text('Article Details'), findsOneWidget);
+        expect(find.text(title), findsOneWidget);
+        expect(find.text(summary), findsOneWidget);
+        expect(find.text('Read Full Article'), findsOneWidget);
+      },
+    );
 
     testWidgets(
-      'should trigger button action when "Read Full Article" is tapped',
+      'ArticleDetailPage: should trigger button action when "Read Full Article" is tapped',
       (tester) async {
         await tester.pumpWidget(
           MaterialApp(

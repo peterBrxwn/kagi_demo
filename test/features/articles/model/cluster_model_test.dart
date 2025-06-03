@@ -6,7 +6,7 @@ import 'package:kagi_demo/features/articles/model/cluster_model.dart';
 
 void main() {
   group('ClusterModel', () {
-    test('should correctly deserialize from JSON', () {
+    test('ClusterModel: should correctly deserialize from JSON', () {
       final json = {
         "cluster_number": 1,
         "unique_domains": 16,
@@ -86,7 +86,7 @@ void main() {
       expect(model.userActionItems, []);
     });
 
-    test('should correctly serialize to JSON', () {
+    test('ClusterModel: should correctly serialize to JSON', () {
       final model = ClusterModel(
         clusterNumber: 1,
         uniqueDomains: 16,
@@ -144,7 +144,7 @@ void main() {
     });
 
     group('StringListConverter', () {
-      test('should convert empty string to empty list', () {
+      test('ClusterModel: should convert empty string to empty list', () {
         const converter = StringListConverter();
 
         final result = converter.fromJson("");
@@ -153,7 +153,7 @@ void main() {
         expect(result, []);
       });
 
-      test('should convert list to list of strings', () {
+      test('ClusterModel: should convert list to list of strings', () {
         const converter = StringListConverter();
 
         final result = converter.fromJson(["Item 1", "Item 2"]);
@@ -161,7 +161,7 @@ void main() {
         expect(result, ["Item 1", "Item 2"]);
       });
 
-      test('should return null for unsupported types', () {
+      test('ClusterModel: should return null for unsupported types', () {
         const converter = StringListConverter();
 
         final result = converter.fromJson(123);
@@ -169,7 +169,7 @@ void main() {
         expect(result, isNull);
       });
 
-      test('should serialize list of strings correctly', () {
+      test('ClusterModel: should serialize list of strings correctly', () {
         const converter = StringListConverter();
         final list = ["Item 1", "Item 2"];
 
@@ -178,7 +178,7 @@ void main() {
         expect(result, ["Item 1", "Item 2"]);
       });
 
-      test('should serialize null correctly', () {
+      test('ClusterModel: should serialize null correctly', () {
         const converter = StringListConverter();
 
         final result = converter.toJson(null);

@@ -46,7 +46,7 @@ void main() {
   });
 
   group('KagiBlocObserver', () {
-    test('onEvent is called and handleEvent is invoked', () {
+    test('KagiBlocObserver: onEvent is called and handleEvent is invoked', () {
       const event = 'TestEvent';
 
       observer.onEvent(mockBloc, event);
@@ -54,7 +54,7 @@ void main() {
       verify(() => mockHandleEvent.call(mockBloc, event)).called(1);
     });
 
-    test('onError is called and handleError is invoked', () {
+    test('KagiBlocObserver: onError is called and handleError is invoked', () {
       const error = 'TestError';
       final stackTrace = StackTrace.current;
 
@@ -63,13 +63,16 @@ void main() {
       verify(() => mockHandleError.call(mockBloc, error, stackTrace)).called(1);
     });
 
-    test('onNotification is called and handleNotification is invoked', () {
-      final notification = Notification(message: 'Test Notification');
-      when(() => mockNotification.notification).thenReturn(notification);
+    test(
+      'KagiBlocObserver: onNotification is called and handleNotification is invoked',
+      () {
+        final notification = Notification(message: 'Test Notification');
+        when(() => mockNotification.notification).thenReturn(notification);
 
-      observer.onNotification(mockBloc, mockNotification);
+        observer.onNotification(mockBloc, mockNotification);
 
-      verify(() => mockHandleNotification.call(notification)).called(1);
-    });
+        verify(() => mockHandleNotification.call(notification)).called(1);
+      },
+    );
   });
 }

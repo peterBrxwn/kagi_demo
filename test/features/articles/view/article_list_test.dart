@@ -46,7 +46,7 @@ void main() {
     const category = 'Technology';
 
     testWidgets(
-      'should display loading indicator when state is ArticlesStateLoading',
+      'ArticlesListPage: should display loading indicator when state is ArticlesStateLoading',
       (tester) async {
         when(
           () => mockArticlesBloc.state,
@@ -58,82 +58,84 @@ void main() {
       },
     );
 
-    testWidgets('should display articles when state is ArticlesStateLoaded', (
-      tester,
-    ) async {
-      const articles = [
-        {
-          "title": "Sample Article 1",
-          "link": "https://example.com/article1",
-          "domain": "example.com",
-          "date": "2025-06-03T12:34:56Z",
-          "image": "https://example.com/image1.jpg",
-        },
-        {
-          "title": "Sample Article 2",
-          "link": "https://example.com/article2",
-          "domain": "example.com",
-          "date": "2025-06-03T14:34:56Z",
-          "image": null,
-        },
-      ];
-      const cluster = {
-        "short_summary": "This is a short summary.",
-        "articles": articles,
-      };
-      final mockResponse = ArticlesApiResponseModel(
-        category: category,
-        timestamp: 1748867070,
-        read: 311,
-        clusters: [ClusterModel.fromJson(cluster)],
-      );
-      when(() => mockArticlesBloc.state).thenReturn(
-        ArticlesState.loaded(ArticlesStateModel(data: mockResponse)),
-      );
+    testWidgets(
+      'ArticlesListPage: should display articles when state is ArticlesStateLoaded',
+      (tester) async {
+        const articles = [
+          {
+            "title": "Sample Article 1",
+            "link": "https://example.com/article1",
+            "domain": "example.com",
+            "date": "2025-06-03T12:34:56Z",
+            "image": "https://example.com/image1.jpg",
+          },
+          {
+            "title": "Sample Article 2",
+            "link": "https://example.com/article2",
+            "domain": "example.com",
+            "date": "2025-06-03T14:34:56Z",
+            "image": null,
+          },
+        ];
+        const cluster = {
+          "short_summary": "This is a short summary.",
+          "articles": articles,
+        };
+        final mockResponse = ArticlesApiResponseModel(
+          category: category,
+          timestamp: 1748867070,
+          read: 311,
+          clusters: [ClusterModel.fromJson(cluster)],
+        );
+        when(() => mockArticlesBloc.state).thenReturn(
+          ArticlesState.loaded(ArticlesStateModel(data: mockResponse)),
+        );
 
-      await tester.pumpWidget(createTestWidget(category));
+        await tester.pumpWidget(createTestWidget(category));
 
-      expect(find.byType(Card), findsNWidgets(articles.length));
-      expect(find.text('Sample Article 1'), findsOneWidget);
-      expect(find.text('Sample Article 2'), findsOneWidget);
-    });
-
-    testWidgets('should navigate to ArticleDetailPage on article tap', (
-      tester,
-    ) async {
-      const articles = [
-        {
-          "title": "Sample Article 1",
-          "link": "https://example.com/article1",
-          "domain": "example.com",
-          "date": "2025-06-03T12:34:56Z",
-          "image": null,
-        },
-      ];
-      const cluster = {
-        "short_summary": "This is a short summary.",
-        "articles": articles,
-      };
-      final mockResponse = ArticlesApiResponseModel(
-        category: category,
-        timestamp: 1748867070,
-        read: 311,
-        clusters: [ClusterModel.fromJson(cluster)],
-      );
-      when(() => mockArticlesBloc.state).thenReturn(
-        ArticlesState.loaded(ArticlesStateModel(data: mockResponse)),
-      );
-
-      await tester.pumpWidget(createTestWidget(category));
-
-      await tester.tap(find.text('Sample Article 1'));
-      await tester.pumpAndSettle();
-
-      expect(find.byType(ArticleDetailPage), findsOneWidget);
-    });
+        expect(find.byType(Card), findsNWidgets(articles.length));
+        expect(find.text('Sample Article 1'), findsOneWidget);
+        expect(find.text('Sample Article 2'), findsOneWidget);
+      },
+    );
 
     testWidgets(
-      'should display error message when state is ArticlesStateError',
+      'ArticlesListPage: should navigate to ArticleDetailPage on article tap',
+      (tester) async {
+        const articles = [
+          {
+            "title": "Sample Article 1",
+            "link": "https://example.com/article1",
+            "domain": "example.com",
+            "date": "2025-06-03T12:34:56Z",
+            "image": null,
+          },
+        ];
+        const cluster = {
+          "short_summary": "This is a short summary.",
+          "articles": articles,
+        };
+        final mockResponse = ArticlesApiResponseModel(
+          category: category,
+          timestamp: 1748867070,
+          read: 311,
+          clusters: [ClusterModel.fromJson(cluster)],
+        );
+        when(() => mockArticlesBloc.state).thenReturn(
+          ArticlesState.loaded(ArticlesStateModel(data: mockResponse)),
+        );
+
+        await tester.pumpWidget(createTestWidget(category));
+
+        await tester.tap(find.text('Sample Article 1'));
+        await tester.pumpAndSettle();
+
+        expect(find.byType(ArticleDetailPage), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'ArticlesListPage: should display error message when state is ArticlesStateError',
       (tester) async {
         when(
           () => mockArticlesBloc.state,
@@ -146,22 +148,25 @@ void main() {
       },
     );
 
-    testWidgets('should retry fetching articles when retry button is pressed', (
-      tester,
-    ) async {
-      when(
-        () => mockArticlesBloc.state,
-      ).thenReturn(ArticlesState.error(ArticlesStateModel()));
-      when(
-        () => mockArticlesBloc.add(const ArticlesEvent.fetch()),
-      ).thenReturn(null);
+    testWidgets(
+      'ArticlesListPage: should retry fetching articles when retry button is pressed',
+      (tester) async {
+        when(
+          () => mockArticlesBloc.state,
+        ).thenReturn(ArticlesState.error(ArticlesStateModel()));
+        when(
+          () => mockArticlesBloc.add(const ArticlesEvent.fetch()),
+        ).thenReturn(null);
 
-      await tester.pumpWidget(createTestWidget(category));
+        await tester.pumpWidget(createTestWidget(category));
 
-      await tester.tap(find.text('Try Again'));
-      await tester.pump();
+        await tester.tap(find.text('Try Again'));
+        await tester.pump();
 
-      verify(() => mockArticlesBloc.add(const ArticlesEvent.fetch())).called(1);
-    });
+        verify(
+          () => mockArticlesBloc.add(const ArticlesEvent.fetch()),
+        ).called(1);
+      },
+    );
   });
 }

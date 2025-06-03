@@ -41,7 +41,7 @@ void main() {
   }
 
   group('CategoryList Widget Tests', () {
-    testWidgets('should display a list of categories', (tester) async {
+    testWidgets('CategoryList: should display a list of categories', (tester) async {
       const categories = [
         CategoryModel(name: 'Technology', file: 'tech'),
         CategoryModel(name: 'Health', file: 'health'),
@@ -50,17 +50,17 @@ void main() {
       await tester.pumpWidget(createTestWidget(categories));
 
       expect(find.byType(Card), findsNWidgets(categories.length));
-      expect(find.text('Technology'), findsOneWidget);
-      expect(find.text('Health'), findsOneWidget);
+      expect(find.text('Technology News'), findsOneWidget);
+      expect(find.text('Health News'), findsOneWidget);
     });
 
-    testWidgets('should navigate to ArticlesListPage on category tap', (
+    testWidgets('CategoryList: should navigate to ArticlesListPage on category tap', (
       tester,
     ) async {
       const categories = [CategoryModel(name: 'Technology', file: 'tech')];
 
       await tester.pumpWidget(createTestWidget(categories));
-      await tester.tap(find.text('Technology'));
+      await tester.tap(find.text('Technology News'));
       await tester.pumpAndSettle();
 
       expect(find.byType(ArticlesListPage), findsOneWidget);

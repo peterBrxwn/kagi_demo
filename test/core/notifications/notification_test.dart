@@ -8,19 +8,22 @@ import 'package:kagi_demo/core/notifications/type.dart';
 
 void main() {
   group('Notification', () {
-    test('should create a default Notification instance', () {
+    test('Notification: should create a default Notification instance', () {
       const notification = Notification();
 
       expect(notification.message, Constants.defaultError);
       expect(notification.type, NotificationType.error);
     });
 
-    test('should create a success Notification instance using factory', () {
-      const message = 'Operation successful';
-      final notification = Notification.success(message);
+    test(
+      'Notification: should create a success Notification instance using factory',
+      () {
+        const message = 'Operation successful';
+        final notification = Notification.success(message);
 
-      expect(notification.message, message);
-      expect(notification.type, NotificationType.success);
-    });
+        expect(notification.message, message);
+        expect(notification.type, NotificationType.success);
+      },
+    );
   });
 }

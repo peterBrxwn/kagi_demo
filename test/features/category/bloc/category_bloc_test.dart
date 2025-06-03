@@ -37,7 +37,7 @@ void main() {
   });
 
   group('CategoryBloc', () {
-    test('initial state is CategoryState.initial', () {
+    test('CategoryBloc: initial state is CategoryState.initial', () {
       expect(
         categoryBloc.state,
         const CategoryState.initial(CategoryStateModel()),
@@ -45,7 +45,7 @@ void main() {
     });
 
     blocTest<CategoryBloc, CategoryState>(
-      'emits [loading, loaded] when categories are fetched successfully',
+      'CategoryBloc: emits [loading, loaded] when categories are fetched successfully',
       build: () {
         when(
           () => mockCategoryRepo.list(param: any(named: 'param')),
@@ -86,7 +86,7 @@ void main() {
     );
 
     blocTest<CategoryBloc, CategoryState>(
-      'emits [loading, error] when fetching categories fails',
+      'CategoryBloc: emits [loading, error] when fetching categories fails',
       build: () {
         when(
           () => mockCategoryRepo.list(param: any(named: 'param')),
@@ -109,7 +109,7 @@ void main() {
     );
 
     blocTest<CategoryBloc, CategoryState>(
-      'emits [loading, error] when an exception is thrown',
+      'CategoryBloc: emits [loading, error] when an exception is thrown',
       build: () {
         when(
           () => mockCategoryRepo.list(param: any(named: 'param')),

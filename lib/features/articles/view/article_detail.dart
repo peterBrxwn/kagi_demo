@@ -16,7 +16,13 @@ class ArticleDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Article Details")),
+      appBar: AppBar(
+        title: const Text(
+          "Article Details",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -24,14 +30,31 @@ class ArticleDetailPage extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
-            Text(summary, style: const TextStyle(fontSize: 16)),
+            Text(summary, style: Theme.of(context).textTheme.bodyMedium),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {},
-              child: const Text("Read Full Article"),
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text("Opened.")));
+                },
+                icon: const Icon(Icons.open_in_browser),
+                label: const Text("Read Full Article"),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  textStyle: const TextStyle(fontSize: 16),
+                ),
+              ),
             ),
           ],
         ),

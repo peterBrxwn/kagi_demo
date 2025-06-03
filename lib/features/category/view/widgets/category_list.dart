@@ -22,9 +22,26 @@ class CategoryListWidget extends StatelessWidget {
         final category = categories[index];
         return Card(
           margin: const EdgeInsets.only(bottom: 16),
+          elevation: 3,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: ListTile(
-            title: Text(category.name),
-            subtitle: Text('File: ${category.file}'),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            title: Text(
+              '${category.name} News',
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+              color: Colors.grey,
+            ),
             onTap: () {
               Navigator.push(
                 context,

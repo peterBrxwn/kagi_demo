@@ -38,7 +38,7 @@ void main() {
   });
 
   group('ArticlesBloc', () {
-    test('initial state is ArticlesState.initial', () {
+    test('ArticlesBloc: initial state is ArticlesState.initial', () {
       expect(
         articlesBloc.state,
         const ArticlesState.initial(ArticlesStateModel()),
@@ -46,7 +46,7 @@ void main() {
     });
 
     blocTest<ArticlesBloc, ArticlesState>(
-      'emits [loading, loaded] when articles are fetched successfully',
+      'ArticlesBloc: emits [loading, loaded] when articles are fetched successfully',
       build: () {
         when(
           () => mockArticlesRepo.list(param: any(named: 'param')),
@@ -135,7 +135,7 @@ void main() {
     );
 
     blocTest<ArticlesBloc, ArticlesState>(
-      'emits [loading, error] when fetching articles fails',
+      'ArticlesBloc: emits [loading, error] when fetching articles fails',
       build: () {
         when(
           () => mockArticlesRepo.list(param: any(named: 'param')),
@@ -158,7 +158,7 @@ void main() {
     );
 
     blocTest<ArticlesBloc, ArticlesState>(
-      'emits [loading, error] when an exception is thrown',
+      'ArticlesBloc: emits [loading, error] when an exception is thrown',
       build: () {
         when(
           () => mockArticlesRepo.list(param: any(named: 'param')),

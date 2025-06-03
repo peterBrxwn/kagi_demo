@@ -13,6 +13,9 @@ part 'category_api_response_model.g.dart';
 @freezed
 abstract class CategoryApiResponseModel with _$CategoryApiResponseModel {
   const CategoryApiResponseModel._();
+
+  // ignore: invalid_annotation_target
+  @JsonSerializable(explicitToJson: true)
   const factory CategoryApiResponseModel({
     required int timestamp,
     required List<CategoryModel> categories,

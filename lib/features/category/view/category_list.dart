@@ -15,14 +15,21 @@ class CategoryListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Categories')),
+      appBar: AppBar(
+        title: const Text(
+          'Categories',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: BlocBuilder<CategoryBloc, CategoryState>(
           builder: (context, state) {
             if (state is CategoryStateLoading) {
               return const Center(child: CircularProgressIndicator());
             }
+
             if (state is CategoryStateLoaded) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,9 +38,12 @@ class CategoryListPage extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Text(
                       'Last Updated: ${state.model.data!.formattedTimestamp}',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall?.copyWith(color: Colors.grey),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 16),
                   Expanded(
                     child: CategoryListWidget(
                       categories: state.model.data!.categories,

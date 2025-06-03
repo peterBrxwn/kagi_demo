@@ -20,5 +20,5 @@ Map<String, dynamic> _$CategoryApiResponseModelToJson(
   _CategoryApiResponseModel instance,
 ) => <String, dynamic>{
   'timestamp': instance.timestamp,
-  'categories': instance.categories,
+  'categories': instance.categories.map((e) => e.toJson()).toList(),
 };

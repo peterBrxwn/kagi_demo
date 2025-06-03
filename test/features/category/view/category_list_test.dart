@@ -37,7 +37,7 @@ void main() {
 
   group('CategoryListPage Widget Tests', () {
     testWidgets(
-      'should display loading indicator when state is CategoryStateLoading',
+      'CategoryListPage: should display loading indicator when state is CategoryStateLoading',
       (tester) async {
         when(
           () => mockCategoryBloc.state,
@@ -49,35 +49,38 @@ void main() {
       },
     );
 
-    testWidgets('should display categories when state is CategoryStateLoaded', (
-      tester,
-    ) async {
-      const json = {
-        "timestamp": 1748867070,
-        "categories": [
-          {"file": "tech", "name": "Technology"},
-          {"file": "health", "name": "Health"},
-        ],
-      };
-      final categoryApiResponseModel = CategoryApiResponseModel.fromJson(json);
-      final mockState = CategoryState.loaded(
-        CategoryStateModel(data: categoryApiResponseModel),
-      );
-      when(() => mockCategoryBloc.state).thenReturn(mockState);
+    testWidgets(
+      'CategoryListPage: should display categories when state is CategoryStateLoaded',
+      (tester) async {
+        const json = {
+          "timestamp": 1748867070,
+          "categories": [
+            {"file": "tech", "name": "Technology"},
+            {"file": "health", "name": "Health"},
+          ],
+        };
+        final categoryApiResponseModel = CategoryApiResponseModel.fromJson(
+          json,
+        );
+        final mockState = CategoryState.loaded(
+          CategoryStateModel(data: categoryApiResponseModel),
+        );
+        when(() => mockCategoryBloc.state).thenReturn(mockState);
 
-      await tester.pumpWidget(createTestWidget());
+        await tester.pumpWidget(createTestWidget());
 
-      expect(
-        find.text(
-          'Last Updated: ${categoryApiResponseModel.formattedTimestamp}',
-        ),
-        findsOneWidget,
-      );
-      expect(find.byType(CategoryListWidget), findsOneWidget);
-    });
+        expect(
+          find.text(
+            'Last Updated: ${categoryApiResponseModel.formattedTimestamp}',
+          ),
+          findsOneWidget,
+        );
+        expect(find.byType(CategoryListWidget), findsOneWidget);
+      },
+    );
 
     testWidgets(
-      'should display error message when state is CategoryStateError',
+      'CategoryListPage: should display error message when state is CategoryStateError',
       (tester) async {
         when(
           () => mockCategoryBloc.state,
@@ -91,7 +94,7 @@ void main() {
     );
 
     testWidgets(
-      'should retry fetching categories when retry button is pressed',
+      'CategoryListPage: should retry fetching categories when retry button is pressed',
       (tester) async {
         when(
           () => mockCategoryBloc.state,

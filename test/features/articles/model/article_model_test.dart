@@ -6,7 +6,7 @@ import 'package:kagi_demo/features/articles/model/article_model.dart';
 
 void main() {
   group('ArticleModel formattedDate Tests', () {
-    test('should return formatted date for valid ISO string', () {
+    test('ArticleModel: should return formatted date for valid ISO string', () {
       final article = ArticleModel(
         title: 'Sample Article',
         link: 'https://example.com',
@@ -19,7 +19,7 @@ void main() {
       expect(result, '2025-06-03 13:34:56');
     });
 
-    test('should return "..." for invalid date string', () {
+    test('ArticleModel: should return "..." for invalid date string', () {
       const invalidDate = 'invalid-date';
       final article = ArticleModel(
         title: 'Sample Article',
@@ -33,7 +33,7 @@ void main() {
       expect(result, '...');
     });
 
-    test('should return "..." for empty date string', () {
+    test('ArticleModel: should return "..." for empty date string', () {
       const emptyDate = '';
       final article = ArticleModel(
         title: 'Sample Article',
@@ -47,7 +47,7 @@ void main() {
       expect(result, '...');
     });
 
-    test('should return "..." for null date (if nullable)', () {
+    test('ArticleModel: should return "..." for null date (if nullable)', () {
       final article = ArticleModel(
         title: 'Sample Article',
         link: 'https://example.com',

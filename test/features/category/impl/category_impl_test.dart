@@ -24,7 +24,7 @@ void main() {
     const param = CategoryApiParamModel(endpoint: endpoint);
 
     test(
-      'should return CategoryApiResponseModel on successful API call',
+      'CategoryImpl: should return CategoryApiResponseModel on successful API call',
       () async {
         const responseJson = {
           "timestamp": 1748867070,
@@ -49,7 +49,7 @@ void main() {
       },
     );
 
-    test('should return AppError on API failure', () async {
+    test('CategoryImpl: should return AppError on API failure', () async {
       final exception = NetworkException('Network error', statusCode: 401);
       when(() => mockHttpService.get(endpoint)).thenThrow(exception);
 

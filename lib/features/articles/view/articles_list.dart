@@ -16,7 +16,13 @@ class ArticlesListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("$category Articles")),
+      appBar: AppBar(
+        title: Text(
+          "$category Articles",
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: BlocBuilder<ArticlesBloc, ArticlesState>(
@@ -33,12 +39,26 @@ class ArticlesListPage extends StatelessWidget {
                 itemCount: articles.length,
                 itemBuilder: (context, index) {
                   final article = articles[index];
+                  final hasValidImage =
+                      article.image != null && article.image!.isNotEmpty;
+                  final subtitle =
+                      hasValidImage
+                          ? '${article.domain}\n${article.formattedDate}'
+                          : '${article.domain} • ${article.formattedDate}';
 
                   return Card(
                     margin: const EdgeInsets.only(bottom: 16),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       leading:
-                          article.image != null && article.image!.isNotEmpty
+                          hasValidImage
                               ? Image.network(
                                 article.image!,
                                 width: 80,
@@ -51,10 +71,19 @@ class ArticlesListPage extends StatelessWidget {
                                   );
                                 },
                               )
-                              : const Icon(Icons.article_outlined),
-                      title: Text(article.title),
+                              : const Icon(
+                                Icons.article_outlined,
+                                size: 40,
+                                color: Colors.grey,
+                              ),
+                      title: Text(
+                        article.title,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
                       subtitle: Text(
-                        '${article.domain} • ${article.formattedDate}',
+                        subtitle,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                       onTap: () {
                         Navigator.push(
@@ -63,7 +92,9 @@ class ArticlesListPage extends StatelessWidget {
                             builder: (_) {
                               return ArticleDetailPage(
                                 title: article.title,
-                                summary: cluster.shortSummary!,
+                                summary:
+                                    cluster.shortSummary ??
+                                    'No summary available.',
                                 url: article.link,
                               );
                             },
@@ -76,11 +107,34 @@ class ArticlesListPage extends StatelessWidget {
               );
             }
 
-            return ErrorDisplay(
-              errorMessage: 'Failed to load news.',
-              onRetry: () {
-                context.read<ArticlesBloc>().add(const ArticlesEvent.fetch());
-              },
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ErrorDisplay(
+                  errorMessage: 'Failed to load news.',
+                  onRetry: () {
+                    context.read<ArticlesBloc>().add(
+                      const ArticlesEvent.fetch(),
+                    );
+                  },
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    context.read<ArticlesBloc>().add(
+                      const ArticlesEvent.fetch(),
+                    );
+                  },
+                  icon: const Icon(Icons.refresh),
+                  label: const Text('Retry'),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                  ),
+                ),
+              ],
             );
           },
         ),

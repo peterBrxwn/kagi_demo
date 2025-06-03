@@ -24,7 +24,7 @@ void main() {
     const param = ArticlesApiParamModel(endpoint: endpoint);
 
     test(
-      'should return ArticlesApiResponseModel on successful API call',
+      'ArticlesImpl: should return ArticlesApiResponseModel on successful API call',
       () async {
         const responseJson = {
           "category": "community",
@@ -44,7 +44,7 @@ void main() {
       },
     );
 
-    test('should return AppError on API failure', () async {
+    test('ArticlesImpl: should return AppError on API failure', () async {
       final exception = NetworkException('Network error', statusCode: 401);
       when(
         () => mockHttpService.get(endpoint),
