@@ -32,13 +32,12 @@ class ArticlesListPage extends StatelessWidget {
             }
 
             if (state is ArticlesStateLoaded) {
-              final cluster = state.model.data!.clusters.first;
-              final articles = cluster.articles!;
+              final clusters = state.model.data!.clusters;
 
               return ListView.builder(
-                itemCount: articles.length,
+                itemCount: clusters.length,
                 itemBuilder: (context, index) {
-                  final article = articles[index];
+                  final article = clusters[index].articles!.first;
                   final hasValidImage =
                       article.image != null && article.image!.isNotEmpty;
                   final subtitle =
@@ -91,11 +90,7 @@ class ArticlesListPage extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (_) {
                               return ArticleDetailPage(
-                                title: article.title,
-                                summary:
-                                    cluster.shortSummary ??
-                                    'No summary available.',
-                                url: article.link,
+                                cluster: clusters[index],
                               );
                             },
                           ),
