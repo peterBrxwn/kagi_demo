@@ -26,24 +26,6 @@ A Flutter application demonstrating the use of **Bloc architecture**, **Freezed 
 
 ---
 
-## Requirements
-
-- Flutter version
-
-```bash
-  Flutter 3.29.2 • channel stable • https://github.com/flutter/flutter.git
-  Framework • revision c236373904 (3 months ago) • 2025-03-13 16:17:06 -0400
-  Engine • revision 18b71d647a
-  Tools • Dart 3.7.2 • DevTools 2.42.3
-```
-
-```bash
-environment:
-  sdk: ^3.7.2
-```
-
----
-
 ## Screenshots
 
 <table>
@@ -84,20 +66,23 @@ environment:
 ```
 
 lib/
-├── core/               \# Core utilities and configurations
-├── features/           \# Feature-specific code
-│   ├── articles/       \# Articles-related code
-│   │   ├── bloc/       \# Bloc for articles
-│   │   ├── impl/       \# Implementation details
-│   │   ├── model/      \# Models for articles
-│   │   └── view/       \# UI for articles
-│   └── category/       \# Category-related code
-│       ├── bloc/       \# Bloc for categories
-│       ├── impl/       \# Implementation details
-│       ├── model/      \# Models for categories
-│       └── view/       \# UI for categories
-├── shared/             \# Shared widgets and utilities
-└── main.dart           \# Entry point of the application
+  ├── core/               # Core utilities and configurations
+  ├── features/           # Feature-specific code
+  │   ├── articles/       # Articles-related code
+  │   │   ├── bloc/       # Bloc for articles
+  │   │   ├── impl/       # Implementation of Repo
+  │   │   ├── repo/       # Articles Repo
+  │   │   ├── model/      # Models for articles
+  │   │   └── view/       # UI for articles
+  │   └── category/       # Category-related code
+  │       ├── bloc/       # Bloc for categories
+  │       ├── impl/       # Implementation of Repo
+  │       ├── repo/       # Category Repository
+  │       ├── model/      # Models for categories
+  │       └── view/       # UI for categories
+  ├── shared/             # Shared widgets and utilities
+  └── main.dart           # Entry point of the application
+test/                     # All Tests
 
 ```
 
@@ -109,6 +94,24 @@ lib/
 
 - [Flutter SDK](https://docs.flutter.dev/get-started/install) (v3.0+)
 - Code editor: [VS Code](https://code.visualstudio.com/) or [Android Studio](https://developer.android.com/studio)
+
+---
+
+## Requirements
+
+- Flutter version
+
+```bash
+  Flutter 3.29.2 • channel stable • https://github.com/flutter/flutter.git
+  Framework • revision c236373904 (3 months ago) • 2025-03-13 16:17:06 -0400
+  Engine • revision 18b71d647a
+  Tools • Dart 3.7.2 • DevTools 2.42.3
+```
+
+```bash
+environment:
+  sdk: ^3.7.2
+```
 
 ### Installation
 
@@ -139,7 +142,7 @@ lib/
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Run all unit and widget tests:
 
