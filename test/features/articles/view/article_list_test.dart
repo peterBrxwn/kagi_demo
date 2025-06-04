@@ -61,7 +61,7 @@ void main() {
     testWidgets(
       'ArticlesListPage: should display articles when state is ArticlesStateLoaded',
       (tester) async {
-        const articles = [
+        const articles1 = [
           {
             "title": "Sample Article 1",
             "link": "https://example.com/article1",
@@ -69,6 +69,8 @@ void main() {
             "date": "2025-06-03T12:34:56Z",
             "image": "https://example.com/image1.jpg",
           },
+        ];
+        const articles2 = [
           {
             "title": "Sample Article 2",
             "link": "https://example.com/article2",
@@ -77,15 +79,22 @@ void main() {
             "image": null,
           },
         ];
-        const cluster = {
+        const cluster1 = {
           "short_summary": "This is a short summary.",
-          "articles": articles,
+          "articles": articles1,
+        };
+        const cluster2 = {
+          "short_summary": "This is a short summary.",
+          "articles": articles2,
         };
         final mockResponse = ArticlesApiResponseModel(
           category: category,
           timestamp: 1748867070,
           read: 311,
-          clusters: [ClusterModel.fromJson(cluster)],
+          clusters: [
+            ClusterModel.fromJson(cluster1),
+            ClusterModel.fromJson(cluster2),
+          ],
         );
         when(() => mockArticlesBloc.state).thenReturn(
           ArticlesState.loaded(ArticlesStateModel(data: mockResponse)),
@@ -93,7 +102,7 @@ void main() {
 
         await tester.pumpWidget(createTestWidget(category));
 
-        expect(find.byType(Card), findsNWidgets(articles.length));
+        expect(find.byType(Card), findsNWidgets(mockResponse.clusters.length));
         expect(find.text('Sample Article 1'), findsOneWidget);
         expect(find.text('Sample Article 2'), findsOneWidget);
       },

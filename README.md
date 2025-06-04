@@ -26,6 +26,24 @@ A Flutter application demonstrating the use of **Bloc architecture**, **Freezed 
 
 ---
 
+## Requirements
+
+- Flutter version
+
+```bash
+  Flutter 3.29.2 • channel stable • https://github.com/flutter/flutter.git
+  Framework • revision c236373904 (3 months ago) • 2025-03-13 16:17:06 -0400
+  Engine • revision 18b71d647a
+  Tools • Dart 3.7.2 • DevTools 2.42.3
+```
+
+```bash
+environment:
+  sdk: ^3.7.2
+```
+
+---
+
 ## Screenshots
 
 <table>
@@ -97,7 +115,7 @@ lib/
 1. Clone the repository:
 
     ```bash
-    git clone [https://github.com/peterBrxwn/kagi_demo.git](https://github.com/peterBrxwn/kagi_demo.git)
+    git clone https://github.com/peterBrxwn/kagi_demo.git
     cd kagi_demo
     ```
 
@@ -107,7 +125,13 @@ lib/
     flutter pub get
     ```
 
-3. Run the application:
+3. Run build runner:
+
+    ```bash
+    flutter pub run build_runner build 
+    ```
+
+4. Run the application:
 
     ```bash
     flutter run
